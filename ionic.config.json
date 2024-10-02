@@ -1,0 +1,7 @@
+{
+  "name": "CrossPublicApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
