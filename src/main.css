@@ -1,0 +1,22 @@
+ion-input.custom {
+    --background: transparent;
+    --placeholder-color: #ddd;
+    --placeholder-opacity: 0.3;
+
+    --padding-bottom: 10px;
+    --padding-end: 10px;
+    --padding-start: 10px;
+    --padding-top: 10px;
+    --label-font-weight: 24px;
+    font-size: 17px;
+    border-bottom: 1px solid black;
+}
+ion-input.custom.error {
+    border-bottom: 2px solid red; /* Красная линия, если есть ошибка */
+}
+
+/* Фон при фокусе */
+ion-input.custom:focus-within {
+    background: #f2fbff;
+    border-bottom: 2px solid var(--ion-color-tertiary);
+}
