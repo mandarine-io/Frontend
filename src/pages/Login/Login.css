@@ -1,0 +1,16 @@
+.container-logo-label {
+    margin: 144px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container-has-account {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.text-login {
+    text-decoration: underline;
+}
