@@ -23,6 +23,7 @@ import '../theme/variables.css'
 import React from "react"
 import { useAuthContext } from "../contexts/AuthContext/AuthContext"
 import { getUnAuthenticatedRoutes } from "./routes"
+import {Redirect} from "react-router";
 
 setupIonicReact()
 
@@ -34,6 +35,9 @@ const App: React.FC = () => {
         <IonApp>
             <IonReactRouter>
                 <IonRouterOutlet>
+                    <Route exact path="/">
+                        {authState ? <></> : <Redirect to="/login" />}
+                    </Route>
 
                     {unauthenticatedRoutes.map((route, index) => (
                         <Route key={index} path={route.path} exact component={route.page} />

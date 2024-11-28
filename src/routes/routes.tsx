@@ -1,5 +1,6 @@
 import React from 'react'
 import Register from "../pages/Register/Register"
+import Login from "../pages/Login/Login";
 
 interface RouteProps {
     page:  React.ComponentType
@@ -11,6 +12,10 @@ export function getUnAuthenticatedRoutes(): RouteProps[] {
             page: Register,
             path: '/register',
         },
+        {
+            page: Login,
+            path: '/login'
+        }
     ]
 }
 
