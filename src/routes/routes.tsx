@@ -1,20 +1,20 @@
 import React from 'react'
-import Register from "../pages/Register/Register"
+import ConfirmRegisterProvider from "../pages/ConfirmRegister/ConfirmRegisterProvider";
 
 interface RouteProps {
-    page:  React.ComponentType
+    page: React.ComponentType
     path: string
 }
+
 export function getUnAuthenticatedRoutes(): RouteProps[] {
     return [
         {
-            page: Register,
+            page: ConfirmRegisterProvider,
             path: '/register',
-        },
+        }
     ]
 }
 
 export function getPrivateRoutes(): RouteProps[] {
-    return [
-    ]
+    return []
 }

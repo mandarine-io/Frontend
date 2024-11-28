@@ -1,36 +1,36 @@
-import { yupResolver } from '@hookform/resolvers/yup'
+import {yupResolver} from '@hookform/resolvers/yup'
 import {
-    IonButton,
-    IonContent,
-    IonPage,
-    IonInput,
-    IonCardContent,
-    IonText,
-    useIonRouter,
-    useIonLoading,
     IonAlert,
+    IonButton,
+    IonCardContent,
+    IonContent,
+    IonInput,
+    IonPage,
+    IonText,
+    useIonLoading,
+    useIonRouter,
 } from '@ionic/react'
-import React, { useState } from "react"
+import React, {useState} from "react"
 import logoWithoutText from '../../assets/logoWithoutText.svg'
 import {Controller, ControllerRenderProps, useForm} from "react-hook-form"
-import { registerFormSchema, RegisterForm } from "./RegisterPage.schema"
+import {RegisterForm, registerFormSchema} from "./RegisterPage.schema"
 import '../../main.css'
-import { useAuthContext } from "../../contexts/AuthContext/AuthContext"
 import zxcvbn from 'zxcvbn'
-import { ProgressBarSafetyPassword } from "../../components/ProgressBarSafetyPassword"
-import { ErrorResponse } from "../../api/createRequest"
+import {ProgressBarSafetyPassword} from "../../components/ProgressBarSafetyPassword"
+import {ErrorResponse} from "../../api/createRequest"
 import './Register.css'
-import { registerRequest } from "../../api/v0/auth/auth.requests";
+import {registerRequest} from "../../api/v0/auth/auth.requests";
+import {useRegistrationContext} from "../../contexts/RegisterContext/RegisterContext";
 
 const Register: React.FC = () => {
     const router = useIonRouter()
     const [present, dismiss] = useIonLoading()
-    const { authClient } = useAuthContext()
+    const [, setRegistrationState] = useRegistrationContext();
     const [passwordStrength, setPasswordStrength] = useState(-1);
     const [alertMessage, setAlertMessage] = useState('')
     const [isOpenAlert, setIsOpenAlert] = useState(false)
 
-    const { handleSubmit, control, formState: { errors } } = useForm<RegisterForm>({
+    const {handleSubmit, control, formState: {errors}} = useForm<RegisterForm>({
         resolver: yupResolver(registerFormSchema),
         mode: 'onBlur',
     });
@@ -44,9 +44,11 @@ const Register: React.FC = () => {
             }
             await registerRequest(dataInput)
             await dismiss()
-            router.push('/', 'root');
+
+            setRegistrationState(prevState => ({...prevState, email: data.email}));
+            router.push('/register/confirm', 'forward');
         } catch (error) {
-            const response  = error as ErrorResponse
+            const response = error as ErrorResponse
             await dismiss()
             switch (response.status) {
                 case 400:
@@ -62,7 +64,7 @@ const Register: React.FC = () => {
         }
     }
 
-    const handlePasswordIonInput = (value:  string | null | undefined, field:  ControllerRenderProps<RegisterForm, "password">) => {
+    const handlePasswordIonInput = (value: string | null | undefined, field: ControllerRenderProps<RegisterForm, "password">) => {
         const password = value
         field.onChange(password)
         const result = zxcvbn(password);
@@ -72,8 +74,8 @@ const Register: React.FC = () => {
     return (
         <IonPage>
             <IonContent>
-                <div className='container-logo-label' >
-                    <img src={logoWithoutText} alt="logo" width="70px" />
+                <div className='container-logo-label'>
+                    <img src={logoWithoutText} alt="logo" width="70px"/>
                     <IonText>
                         <h1>Регистрация</h1>
                     </IonText>
@@ -83,7 +85,7 @@ const Register: React.FC = () => {
                         <Controller
                             name="username"
                             control={control}
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <>
                                     <IonInput
                                         className={`auth-input ${errors.username ? 'error' : ''}`}
@@ -95,7 +97,8 @@ const Register: React.FC = () => {
                                         onIonInput={(e) => field.onChange(e.detail.value)}
                                         onBlur={field.onBlur}
                                     />
-                                    <IonText className={"ion-text-right"} color="danger">{errors.username?.message}</IonText>
+                                    <IonText className={"ion-text-right"}
+                                             color="danger">{errors.username?.message}</IonText>
                                 </>
                             )}
                         />
@@ -103,7 +106,7 @@ const Register: React.FC = () => {
                         <Controller
                             name="email"
                             control={control}
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <>
                                     <IonInput
                                         className={`auth-input ${errors.email ? 'error' : ''}`}
@@ -115,7 +118,8 @@ const Register: React.FC = () => {
                                         onIonInput={(e) => field.onChange(e.detail.value)}
                                         onBlur={field.onBlur}
                                     />
-                                    <IonText className={"ion-text-right"} color="danger">{errors.email?.message}</IonText>
+                                    <IonText className={"ion-text-right"}
+                                             color="danger">{errors.email?.message}</IonText>
                                 </>
                             )}
                         />
@@ -123,7 +127,7 @@ const Register: React.FC = () => {
                         <Controller
                             name="password"
                             control={control}
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <>
                                     <IonInput
                                         className={`auth-input ${errors.password ? 'error' : ''}`}
@@ -135,7 +139,8 @@ const Register: React.FC = () => {
                                         onIonInput={(e) => handlePasswordIonInput(e.detail.value, field)}
                                         onBlur={field.onBlur}
                                     />
-                                    <IonText className={"ion-text-right"} color="danger">{errors.password?.message}</IonText>
+                                    <IonText className={"ion-text-right"}
+                                             color="danger">{errors.password?.message}</IonText>
                                     <ProgressBarSafetyPassword val={passwordStrength} error={errors.password}/>
                                 </>
                             )}
@@ -143,7 +148,7 @@ const Register: React.FC = () => {
                         <Controller
                             name="passwordConfirm"
                             control={control}
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <>
                                     <IonInput
                                         className={`auth-input ${errors.passwordConfirm ? 'error' : ''}`}
@@ -155,7 +160,8 @@ const Register: React.FC = () => {
                                         onIonInput={(e) => field.onChange(e.detail.value)}
                                         onBlur={field.onBlur}
                                     />
-                                    <IonText className={"ion-text-right"} color="danger">{errors.passwordConfirm?.message}</IonText>
+                                    <IonText className={"ion-text-right"}
+                                             color="danger">{errors.passwordConfirm?.message}</IonText>
                                 </>
                             )}
                         />
@@ -175,7 +181,9 @@ const Register: React.FC = () => {
                         </IonButton>
                         <div className='container-has-account'>
                             <IonText className={"ion-margin-end"}>Уже есть аккаунт?</IonText>
-                            <IonText color="secondary" className='text-login' onClick={() => {router.push('/', 'root')}}>Войти</IonText>
+                            <IonText color="secondary" className='text-login' onClick={() => {
+                                router.push('/', 'root')
+                            }}>Войти</IonText>
                         </div>
                     </form>
 
