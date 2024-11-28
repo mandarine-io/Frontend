@@ -12,3 +12,8 @@ export type RegisterInput = {
     password: string
     username: string
 }
+
+export type ConfirmRegisterInput = {
+    email: string;
+    otp: string;
+}
