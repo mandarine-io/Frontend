@@ -1,0 +1,59 @@
+.container-logo-label {
+    margin: 120px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container-has-account {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.text-login {
+    text-decoration: underline;
+}
+
+.logo-container {
+    padding: 15px 0 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo-mail {
+    width: 42px;
+    height: 42px;
+}
+
+.logo-yandex {
+    width: 50px;
+    height: 50px;
+}
+
+.logo-gmail {
+    width: 50px;
+    height: 50px;
+}
+.line-with-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    margin: 0 auto;
+    gap: 10px;
+}
+
+.line-with-text::before,
+.line-with-text::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid black;
+}
+
+.line-with-text span {
+    padding: 0 10px;
+    font-size: 14px;
+}
