@@ -44,21 +44,12 @@ const Register: React.FC = () => {
             }
             await registerRequest(dataInput)
             await dismiss()
-            router.push('/', 'root');
+            router.push('/register/confirm', 'root');
         } catch (error) {
             const response  = error as ErrorResponse
             await dismiss()
-            switch (response.status) {
-                case 400:
-                    setAlertMessage("Введенные данные не корректные");
-                    break;
-                case 409:
-                    setAlertMessage("Такой пользователь уже существует");
-                    break;
-                default:
-                    setAlertMessage("Ошибка сервера");
-                    break;
-            }
+            setAlertMessage(response.message)
+            setIsOpenAlert(true)
         }
     }
 
@@ -175,7 +166,7 @@ const Register: React.FC = () => {
                         </IonButton>
                         <div className='container-has-account'>
                             <IonText className={"ion-margin-end"}>Уже есть аккаунт?</IonText>
-                            <IonText color="secondary" className='text-login' onClick={() => {router.push('/', 'root')}}>Войти</IonText>
+                            <IonText color="secondary" className='text-login' onClick={() => {router.push('/login', 'root')}}>Войти</IonText>
                         </div>
                     </form>
 
