@@ -1,5 +1,6 @@
 import React from 'react'
 import Register from "../pages/Register/Register"
+import PasswordRecovery from "../pages/PasswordRecovery/PasswordRecovery";
 
 interface RouteProps {
     page:  React.ComponentType
@@ -10,6 +11,10 @@ export function getUnAuthenticatedRoutes(): RouteProps[] {
         {
             page: Register,
             path: '/register',
+        },
+        {
+            page: PasswordRecovery,
+            path: '/recovery-password',
         },
     ]
 }

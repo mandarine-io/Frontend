@@ -34,3 +34,34 @@ export const logoutRequest = async () => {
         authorized: true,
     })
 }
+
+export async function sendEmail(email: string) {
+    return createRequest({
+        url: `${BACKEND_URL}/recovery-password`,
+        method: 'POST',
+        data: email,
+    })
+}
+
+export async function sendCode(email: string, code: string) {
+    return createRequest({
+        url: `${BACKEND_URL}/recovery-password/verify`,
+        method: 'POST',
+        data: {
+            email: email,
+            otp: code,
+        }
+    })
+}
+
+export async function sendNewPassword(email: string, code: string, password: string) {
+    return createRequest({
+        url: `${BACKEND_URL}/reset-password`,
+        method: 'POST',
+        data: {
+            email: email,
+            otp: code,
+            password: password,
+        }
+    })
+}
