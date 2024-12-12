@@ -1,9 +1,9 @@
-import {createRequest, ErrorResponse} from "../../createRequest"
+import {createRequest} from "../../createRequest"
 import {ConfirmRegisterInput, LoginInput, LoginOutput, RegisterInput} from "./auth.types"
+import {projectConfig} from "../../../config";
 
-const BACKEND_URL = `https://dev.mandarine-app.ru/api/v0/auth`
+const BACKEND_URL = `${projectConfig.serviceConfig.backendUrl}/v0/auth`
 
-// ${projectConfig.serviceConfig.backendUrl}/v0/auth
 export async function loginRequest(input: LoginInput): Promise<LoginOutput> {
     return await createRequest<LoginOutput>({
         url: `${BACKEND_URL}/login`,
@@ -36,7 +36,7 @@ export const logoutRequest = async () => {
 }
 
 export async function confirmRegisterRequest(input: ConfirmRegisterInput) {
-    return await createRequest<ErrorResponse>({
+    return await createRequest({
         url: `${BACKEND_URL}/register/confirm`,
         method: 'POST',
         data: input,

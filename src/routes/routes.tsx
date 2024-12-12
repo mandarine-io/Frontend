@@ -1,5 +1,5 @@
 import React from 'react'
-import ConfirmRegisterProvider from "../pages/ConfirmRegister/ConfirmRegisterProvider";
+import ConfirmRegisterProvider from "../../src/pages/RegisterGroupPages/RegisterGroup";
 
 interface RouteProps {
     page: React.ComponentType

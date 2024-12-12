@@ -10,17 +10,17 @@ import {
     useIonRouter
 } from "@ionic/react";
 import {useState} from "react";
-import {confirmRegisterRequest} from "../../api/v0/auth/auth.requests";
-import logoWithoutText from "../../assets/logoWithoutText.svg";
-import {ErrorResponse} from "../../api/createRequest";
+import {confirmRegisterRequest} from "../../../../api/v0/auth/auth.requests";
+import logoWithoutText from "../../../../assets/logoWithoutText.svg";
+import {ErrorResponse} from "../../../../api/createRequest";
 import {Controller, useForm} from "react-hook-form";
-import {useRegistrationContext} from "../../contexts/RegisterContext/RegisterContext";
+import {useRegistrationContext} from "../../RegisterContext";
 import {ConfirmRegisterForm, confirmRegisterFormSchema} from "./ConfirmRegisterPage.schema";
 import {yupResolver} from "@hookform/resolvers/yup";
 
 const ConfirmRegister: React.FC = () => {
     const router = useIonRouter();
-    const [registrationState] = useRegistrationContext();
+    const {registrationState} = useRegistrationContext();
     const [present, dismiss] = useIonLoading();
     const [alertMessage, setAlertMessage] = useState('');
     const [isOpenAlert, setIsOpenAlert] = useState(false);
@@ -31,19 +31,15 @@ const ConfirmRegister: React.FC = () => {
     })
 
     const handleConfirm = async (data: ConfirmRegisterForm) => {
+        const email = registrationState.email;
+        if (!email) {
+            setAlertMessage("Отсутствует почта");
+            setIsOpenAlert(true)
+        }
         try {
-            const email = registrationState.email;
-            if (!email) {
-                throw {
-                    message: "Отсутствует почта",
-                    path: "/api/v0/auth/recovery-password/verify",
-                    status: 400,
-                    timestamp: new Date().toISOString(),
-                };
-            }
             await present('Подождите...')
             const confirmRegisterInput = {
-                email: email,
+                email: email!,
                 otp: data.otp,
             }
             await confirmRegisterRequest(confirmRegisterInput);
@@ -58,17 +54,24 @@ const ConfirmRegister: React.FC = () => {
 
     }
 
+    const handleAlertDismiss = () => {
+        setIsOpenAlert(false);
+        if (alertMessage === "Отсутствует почта") {
+            router.push('/register', 'root');
+        }
+    }
+
     return (
         <IonPage>
             <IonContent>
-                <div className='container-success'>
+                <div className="container-logo-label">
                     <img src={logoWithoutText} alt="logo" width="70px"/>
                     <IonText>
                         <h1>Подтвердите ваш адрес почты</h1>
                     </IonText>
                 </div>
                 <IonCardContent>
-                    <IonText className="container-enter-otp">
+                    <IonText className="page-container">
                         <h3>Введите 6 чисел, которые мы вам отправили, чтобы подтвердить ваш аккаунт</h3>
                     </IonText>
                     <form onSubmit={handleSubmit(handleConfirm)}>
@@ -79,7 +82,7 @@ const ConfirmRegister: React.FC = () => {
                                 <>
                                     <IonInput
                                         className={`auth-input ${errors.otp ? 'error' : ''}`}
-                                        type='text'
+                                        type='number'
                                         value={field.value}
                                         onIonInput={(e) => field.onChange(e.detail.value)}
                                         onBlur={field.onBlur}
@@ -103,7 +106,7 @@ const ConfirmRegister: React.FC = () => {
                     header="Ошибка подтверждения регистрации"
                     message={alertMessage}
                     buttons={['Закрыть']}
-                    onDidDismiss={() => setIsOpenAlert(false)}
+                    onDidDismiss={handleAlertDismiss}
                 />
             </IonContent>
         </IonPage>

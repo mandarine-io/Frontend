@@ -11,21 +11,21 @@ import {
     useIonRouter,
 } from '@ionic/react'
 import React, {useState} from "react"
-import logoWithoutText from '../../assets/logoWithoutText.svg'
+import logoWithoutText from '../../../../assets/logoWithoutText.svg'
 import {Controller, ControllerRenderProps, useForm} from "react-hook-form"
 import {RegisterForm, registerFormSchema} from "./RegisterPage.schema"
-import '../../main.css'
+import '../../../../main.css'
 import zxcvbn from 'zxcvbn'
-import {ProgressBarSafetyPassword} from "../../components/ProgressBarSafetyPassword"
-import {ErrorResponse} from "../../api/createRequest"
+import {ProgressBarSafetyPassword} from "../../../../components/ProgressBarSafetyPassword"
+import {ErrorResponse} from "../../../../api/createRequest"
 import './Register.css'
-import {registerRequest} from "../../api/v0/auth/auth.requests";
-import {useRegistrationContext} from "../../contexts/RegisterContext/RegisterContext";
+import {registerRequest} from "../../../../api/v0/auth/auth.requests";
+import {useRegistrationContext} from "../../RegisterContext";
 
 const Register: React.FC = () => {
     const router = useIonRouter()
     const [present, dismiss] = useIonLoading()
-    const [, setRegistrationState] = useRegistrationContext();
+    const {setRegistrationState} = useRegistrationContext();
     const [passwordStrength, setPasswordStrength] = useState(-1);
     const [alertMessage, setAlertMessage] = useState('')
     const [isOpenAlert, setIsOpenAlert] = useState(false)

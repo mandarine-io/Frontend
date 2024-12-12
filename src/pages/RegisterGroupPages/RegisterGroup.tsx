@@ -1,13 +1,13 @@
-import {RegistrationContextProvider} from "../../contexts/RegisterContext/RegisterContext";
-import Register from "../Register/Register";
-import ConfirmRegister from "./ConfirmRegister";
-import RegisterSuccess from "./RegisterSuccess";
+import {RegistrationContextProvider} from "./RegisterContext";
+import Register from "./modules/Register/Register";
+import ConfirmRegister from "./modules/ConfirmRegister/ConfirmRegister";
+import RegisterSuccess from "./modules/RegisterSuccess/RegisterSuccess";
 import React from "react";
 import {IonRouterOutlet} from "@ionic/react";
 import {IonReactRouter} from "@ionic/react-router";
 import {Route} from "react-router-dom";
 
-const ConfirmRegisterProvider: React.FC = () => {
+const RegisterGroup: React.FC = () => {
     return (
         <RegistrationContextProvider>
             <IonReactRouter>
@@ -21,4 +21,4 @@ const ConfirmRegisterProvider: React.FC = () => {
     )
 }
 
-export default ConfirmRegisterProvider;
+export default RegisterGroup;

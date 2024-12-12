@@ -1,6 +1,6 @@
 import React from 'react';
 import {IonButton, IonContent, IonPage, IonText, useIonRouter,} from '@ionic/react';
-import greenCheckmark from "../../assets/greenCheckmark.png";
+import greenCheckmark from "../../../../assets/greenCheckmark.svg";
 
 const RegisterSuccess: React.FC = () => {
     const router = useIonRouter();
