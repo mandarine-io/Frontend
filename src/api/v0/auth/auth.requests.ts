@@ -1,6 +1,6 @@
 import { createRequest } from "../../createRequest"
 import { projectConfig } from "../../../config"
-import { LoginInput, LoginOutput, RegisterInput } from "./auth.types"
+import {LoginInput, LoginOutput, RegisterInput, socialLoginCallbackInput, SocialLoginInput} from "./auth.types"
 
 const BACKEND_URL = `${projectConfig.serviceConfig.backendUrl}/v0/auth`
 
@@ -34,3 +34,22 @@ export const logoutRequest = async () => {
         authorized: true,
     })
 }
+
+export const socialLogin = async  (input: SocialLoginInput)=> {
+    return await createRequest({
+        url: `${BACKEND_URL}/social/${input.provider}?redirectUrl=${input.redirectUrl}`,
+        method: 'GET',
+    })
+}
+
+export async function socialLoginCallback(input: socialLoginCallbackInput): Promise<LoginOutput> {
+    return await createRequest({
+        url: `${BACKEND_URL}/social/${input.provider}/callback`,
+        method: 'POST',
+        data: {
+            code: input.code,
+            state: input.state,
+        },
+    })
+}
+
