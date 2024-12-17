@@ -21,6 +21,8 @@ import {useAuthContext} from "../../contexts/AuthContext/AuthContext";
 import yandexLogo from '../../assets/yandexLogo.svg'
 import mailLogo from '../../assets/mailLogo.svg'
 import googleLogo from '../../assets/googleLogo.svg'
+import {socialLogin} from "../../api/v0/auth/auth.requests";
+import { Browser } from '@capacitor/browser';
 
 const Login: React.FC = () => {
     const router = useIonRouter()
@@ -51,6 +53,23 @@ const Login: React.FC = () => {
         }
     }
 
+    const startSocialLogin = (provider: string) => async () => {
+        try {
+            const response = await socialLogin({
+                provider: 'yandex',
+                redirectUrl: encodeURIComponent('myapp://auth-callback'),
+            })
+            //console.log(response.location)
+
+            //await Browser.open({ url: ????????????? });
+
+        } catch (error) {
+            const response  = error as ErrorResponse
+            await dismiss()
+            setAlertMessage(response.message);
+            setIsOpenAlert(true)
+        }
+    }
 
     return (
         <IonPage>
@@ -62,7 +81,7 @@ const Login: React.FC = () => {
                     </IonText>
                 </div>
                 <div className="logo-container">
-                    <img src={yandexLogo} alt="Yandex Logo" className="logo-yandex"/>
+                    <img src={yandexLogo} alt="Yandex Logo" className="logo-yandex" onClick={startSocialLogin('yandex')}/>
                     <img src={mailLogo} alt="Mail Logo" className="logo-mail"/>
                     <img src={googleLogo} alt="Google Logo" className="logo-google"/>
                 </div>
