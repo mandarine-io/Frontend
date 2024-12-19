@@ -1,5 +1,6 @@
 import React from 'react'
 import Register from "../pages/Register/Register"
+import PasswordRecovery from "../pages/PasswordRecovery/PasswordRecovery";
 import Login from "../pages/Login/Login";
 
 interface RouteProps {
@@ -15,7 +16,11 @@ export function getUnAuthenticatedRoutes(): RouteProps[] {
         {
             page: Login,
             path: '/login'
-        }
+        },
+        {
+            page: PasswordRecovery,
+            path: '/recovery-password',
+        },
     ]
 }
 
