@@ -1,7 +1,7 @@
 ion-input.auth-input {
     --background: transparent;
-    --placeholder-color: #ddd;
-    --placeholder-opacity: 0.3;
+    --placeholder-color: #000;
+    --placeholder-opacity: 1;
 
     --padding-bottom: 10px;
     --padding-end: 10px;

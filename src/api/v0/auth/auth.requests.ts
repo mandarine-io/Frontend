@@ -1,6 +1,6 @@
 import { createRequest } from "../../createRequest"
 import { projectConfig } from "../../../config"
-import { LoginInput, LoginOutput, RegisterInput } from "./auth.types"
+import {ConfirmRegisterInput, LoginInput, LoginOutput, RegisterInput } from "./auth.types"
 
 const BACKEND_URL = `${projectConfig.serviceConfig.backendUrl}/v0/auth`
 
@@ -32,6 +32,14 @@ export const logoutRequest = async () => {
         url: `${BACKEND_URL}/logout`,
         method: 'GET',
         authorized: true,
+    })
+}
+
+export async function confirmRegisterRequest(input: ConfirmRegisterInput) {
+    return await createRequest({
+        url: `${BACKEND_URL}/register/confirm`,
+        method: 'POST',
+        data: input,
     })
 }
 

@@ -10,22 +10,22 @@ import {
     useIonLoading,
     IonAlert,
 } from '@ionic/react'
-import React, { useState } from "react"
-import logoWithoutText from '../../assets/logoWithoutText.svg'
+import React, {useState} from "react"
+import logoWithoutText from '../../../../assets/logoWithoutText.svg'
 import {Controller, ControllerRenderProps, useForm} from "react-hook-form"
-import { registerFormSchema, RegisterForm } from "./RegisterPage.schema"
-import '../../main.css'
-import { useAuthContext } from "../../contexts/AuthContext/AuthContext"
+import {RegisterForm, registerFormSchema} from "./RegisterPage.schema"
+import '../../../../main.css'
 import zxcvbn from 'zxcvbn'
-import { ProgressBarSafetyPassword } from "../../components/ProgressBarSafetyPassword"
-import { ErrorResponse } from "../../api/createRequest"
+import {ProgressBarSafetyPassword} from "../../../../components/ProgressBarSafetyPassword"
+import {ErrorResponse} from "../../../../api/createRequest"
 import './Register.css'
-import { registerRequest } from "../../api/v0/auth/auth.requests";
+import {registerRequest} from "../../../../api/v0/auth/auth.requests";
+import {useRegistrationContext} from "../../RegisterContext";
 
 const Register: React.FC = () => {
     const router = useIonRouter()
     const [present, dismiss] = useIonLoading()
-    const { authClient } = useAuthContext()
+    const {setRegistrationState} = useRegistrationContext();
     const [passwordStrength, setPasswordStrength] = useState(-1);
     const [alertMessage, setAlertMessage] = useState('')
     const [isOpenAlert, setIsOpenAlert] = useState(false)
@@ -44,7 +44,9 @@ const Register: React.FC = () => {
             }
             await registerRequest(dataInput)
             await dismiss()
-            router.push('/register/confirm', 'root');
+
+            setRegistrationState(prevState => ({...prevState, email: data.email}));
+            router.push('/register/confirm', 'forward');
         } catch (error) {
             const response  = error as ErrorResponse
             await dismiss()

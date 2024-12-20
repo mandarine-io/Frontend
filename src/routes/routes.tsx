@@ -1,17 +1,18 @@
 import React from 'react'
-import Register from "../pages/Register/Register"
 import PasswordRecovery from "../pages/PasswordRecovery/PasswordRecovery";
 import Login from "../pages/Login/Login";
+import RegisterGroup from "../../src/pages/RegisterGroupPages/RegisterGroup";
 
 interface RouteProps {
     page:  React.ComponentType
     path: string
 }
+
 export function getUnAuthenticatedRoutes(): RouteProps[] {
     return [
         {
-            page: Register,
-            path: '/register',
+            page: RegisterGroup,
+            path: '/register'
         },
         {
             page: Login,

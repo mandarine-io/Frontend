@@ -24,7 +24,6 @@ import {ErrorResponse} from "../../../../api/createRequest";
 import {sendNewPassword} from "../../../../api/v0/auth/auth.requests";
 import useAlert from "../../../../common/hooks/useAlert";
 import {ProgressBarSafetyPassword} from "../../../../components/ProgressBarSafetyPassword";
-import {RegisterForm} from "../../../Register/RegisterPage.schema";
 
 const EnterPasswordStep : React.FC = () => {
     const router = useIonRouter();
