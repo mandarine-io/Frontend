@@ -1,6 +1,6 @@
-import {createRequest} from "../../createRequest"
-import {ConfirmRegisterInput, LoginInput, LoginOutput, RegisterInput} from "./auth.types"
-import {projectConfig} from "../../../config";
+import { createRequest } from "../../createRequest"
+import { projectConfig } from "../../../config"
+import {ConfirmRegisterInput, LoginInput, LoginOutput, RegisterInput } from "./auth.types"
 
 const BACKEND_URL = `${projectConfig.serviceConfig.backendUrl}/v0/auth`
 
@@ -40,5 +40,36 @@ export async function confirmRegisterRequest(input: ConfirmRegisterInput) {
         url: `${BACKEND_URL}/register/confirm`,
         method: 'POST',
         data: input,
+    })
+}
+
+export async function sendEmail(email: string) {
+    return createRequest({
+        url: `${BACKEND_URL}/recovery-password`,
+        method: 'POST',
+        data: email,
+    })
+}
+
+export async function sendCode(email: string, code: string) {
+    return createRequest({
+        url: `${BACKEND_URL}/recovery-password/verify`,
+        method: 'POST',
+        data: {
+            email: email,
+            otp: code,
+        }
+    })
+}
+
+export async function sendNewPassword(email: string, code: string, password: string) {
+    return createRequest({
+        url: `${BACKEND_URL}/reset-password`,
+        method: 'POST',
+        data: {
+            email: email,
+            otp: code,
+            password: password,
+        }
     })
 }

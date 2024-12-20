@@ -1,14 +1,14 @@
-import {yupResolver} from '@hookform/resolvers/yup'
+import { yupResolver } from '@hookform/resolvers/yup'
 import {
-    IonAlert,
     IonButton,
-    IonCardContent,
     IonContent,
-    IonInput,
     IonPage,
+    IonInput,
+    IonCardContent,
     IonText,
-    useIonLoading,
     useIonRouter,
+    useIonLoading,
+    IonAlert,
 } from '@ionic/react'
 import React, {useState} from "react"
 import logoWithoutText from '../../../../assets/logoWithoutText.svg'
@@ -30,7 +30,7 @@ const Register: React.FC = () => {
     const [alertMessage, setAlertMessage] = useState('')
     const [isOpenAlert, setIsOpenAlert] = useState(false)
 
-    const {handleSubmit, control, formState: {errors}} = useForm<RegisterForm>({
+    const { handleSubmit, control, formState: { errors } } = useForm<RegisterForm>({
         resolver: yupResolver(registerFormSchema),
         mode: 'onBlur',
     });
@@ -48,23 +48,14 @@ const Register: React.FC = () => {
             setRegistrationState(prevState => ({...prevState, email: data.email}));
             router.push('/register/confirm', 'forward');
         } catch (error) {
-            const response = error as ErrorResponse
+            const response  = error as ErrorResponse
             await dismiss()
-            switch (response.status) {
-                case 400:
-                    setAlertMessage("Введенные данные не корректные");
-                    break;
-                case 409:
-                    setAlertMessage("Такой пользователь уже существует");
-                    break;
-                default:
-                    setAlertMessage("Ошибка сервера");
-                    break;
-            }
+            setAlertMessage(response.message)
+            setIsOpenAlert(true)
         }
     }
 
-    const handlePasswordIonInput = (value: string | null | undefined, field: ControllerRenderProps<RegisterForm, "password">) => {
+    const handlePasswordIonInput = (value:  string | null | undefined, field:  ControllerRenderProps<RegisterForm, "password">) => {
         const password = value
         field.onChange(password)
         const result = zxcvbn(password);
@@ -74,8 +65,8 @@ const Register: React.FC = () => {
     return (
         <IonPage>
             <IonContent>
-                <div className='container-logo-label'>
-                    <img src={logoWithoutText} alt="logo" width="70px"/>
+                <div className='container-logo-label' >
+                    <img src={logoWithoutText} alt="logo" width="70px" />
                     <IonText>
                         <h1>Регистрация</h1>
                     </IonText>
@@ -85,7 +76,7 @@ const Register: React.FC = () => {
                         <Controller
                             name="username"
                             control={control}
-                            render={({field}) => (
+                            render={({ field }) => (
                                 <>
                                     <IonInput
                                         className={`auth-input ${errors.username ? 'error' : ''}`}
@@ -97,8 +88,7 @@ const Register: React.FC = () => {
                                         onIonInput={(e) => field.onChange(e.detail.value)}
                                         onBlur={field.onBlur}
                                     />
-                                    <IonText className={"ion-text-right"}
-                                             color="danger">{errors.username?.message}</IonText>
+                                    <IonText className={"ion-text-right"} color="danger">{errors.username?.message}</IonText>
                                 </>
                             )}
                         />
@@ -106,7 +96,7 @@ const Register: React.FC = () => {
                         <Controller
                             name="email"
                             control={control}
-                            render={({field}) => (
+                            render={({ field }) => (
                                 <>
                                     <IonInput
                                         className={`auth-input ${errors.email ? 'error' : ''}`}
@@ -118,8 +108,7 @@ const Register: React.FC = () => {
                                         onIonInput={(e) => field.onChange(e.detail.value)}
                                         onBlur={field.onBlur}
                                     />
-                                    <IonText className={"ion-text-right"}
-                                             color="danger">{errors.email?.message}</IonText>
+                                    <IonText className={"ion-text-right"} color="danger">{errors.email?.message}</IonText>
                                 </>
                             )}
                         />
@@ -127,7 +116,7 @@ const Register: React.FC = () => {
                         <Controller
                             name="password"
                             control={control}
-                            render={({field}) => (
+                            render={({ field }) => (
                                 <>
                                     <IonInput
                                         className={`auth-input ${errors.password ? 'error' : ''}`}
@@ -139,8 +128,7 @@ const Register: React.FC = () => {
                                         onIonInput={(e) => handlePasswordIonInput(e.detail.value, field)}
                                         onBlur={field.onBlur}
                                     />
-                                    <IonText className={"ion-text-right"}
-                                             color="danger">{errors.password?.message}</IonText>
+                                    <IonText className={"ion-text-right"} color="danger">{errors.password?.message}</IonText>
                                     <ProgressBarSafetyPassword val={passwordStrength} error={errors.password}/>
                                 </>
                             )}
@@ -148,7 +136,7 @@ const Register: React.FC = () => {
                         <Controller
                             name="passwordConfirm"
                             control={control}
-                            render={({field}) => (
+                            render={({ field }) => (
                                 <>
                                     <IonInput
                                         className={`auth-input ${errors.passwordConfirm ? 'error' : ''}`}
@@ -160,8 +148,7 @@ const Register: React.FC = () => {
                                         onIonInput={(e) => field.onChange(e.detail.value)}
                                         onBlur={field.onBlur}
                                     />
-                                    <IonText className={"ion-text-right"}
-                                             color="danger">{errors.passwordConfirm?.message}</IonText>
+                                    <IonText className={"ion-text-right"} color="danger">{errors.passwordConfirm?.message}</IonText>
                                 </>
                             )}
                         />
@@ -181,9 +168,7 @@ const Register: React.FC = () => {
                         </IonButton>
                         <div className='container-has-account'>
                             <IonText className={"ion-margin-end"}>Уже есть аккаунт?</IonText>
-                            <IonText color="secondary" className='text-login' onClick={() => {
-                                router.push('/', 'root')
-                            }}>Войти</IonText>
+                            <IonText color="secondary" className='text-login' onClick={() => {router.push('/login', 'root')}}>Войти</IonText>
                         </div>
                     </form>
 
