@@ -71,9 +71,6 @@ const ConfirmRegister: React.FC = () => {
                     </IonText>
                 </div>
                 <IonCardContent>
-                    <IonText className="page-container">
-                        <h3>Введите 6 чисел, которые мы вам отправили, чтобы подтвердить ваш аккаунт</h3>
-                    </IonText>
                     <form onSubmit={handleSubmit(handleConfirm)}>
                         <Controller
                             name="otp"
@@ -86,6 +83,7 @@ const ConfirmRegister: React.FC = () => {
                                         value={field.value}
                                         onIonInput={(e) => field.onChange(e.detail.value)}
                                         onBlur={field.onBlur}
+                                        placeholder="Введите код из письма"
                                     />
                                 </>
                             )}

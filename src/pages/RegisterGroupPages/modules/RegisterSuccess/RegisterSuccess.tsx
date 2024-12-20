@@ -1,5 +1,5 @@
 import React from 'react';
-import {IonButton, IonContent, IonPage, IonText, useIonRouter,} from '@ionic/react';
+import {IonButton, IonCardContent, IonContent, IonPage, IonText, useIonRouter,} from '@ionic/react';
 import greenCheckmark from "../../../../assets/greenCheckmark.svg";
 
 const RegisterSuccess: React.FC = () => {
@@ -12,21 +12,23 @@ const RegisterSuccess: React.FC = () => {
     return (
         <IonPage>
             <IonContent>
-                <div className='container-logo-label'>
-                    <img src={greenCheckmark} alt="success" width="70px"/>
-                    <IonText>
-                        <h1>Успешно</h1>
-                    </IonText>
-                </div>
-                <IonButton
-                    style={{marginTop: "60px"}}
-                    expand='block'
-                    type="submit"
-                    color="secondary"
-                    onClick={handleLogin}
-                >
-                    <IonText color='white'>На экран входа</IonText>
-                </IonButton>
+                <IonCardContent>
+                    <div className='container-logo-label'>
+                        <img src={greenCheckmark} alt="success" width="70px"/>
+                        <IonText>
+                            <h1>Успешно!</h1>
+                        </IonText>
+                    </div>
+                    <IonButton
+                        style={{marginTop: "60px"}}
+                        expand="block"
+                        type="submit"
+                        color="secondary"
+                        onClick={handleLogin}
+                    >
+                        <IonText color='white'>На экран входа</IonText>
+                    </IonButton>
+                </IonCardContent>
             </IonContent>
         </IonPage>
     );
