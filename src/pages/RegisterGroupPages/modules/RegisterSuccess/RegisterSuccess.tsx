@@ -13,21 +13,22 @@ const RegisterSuccess: React.FC = () => {
         <IonPage>
             <IonContent>
                 <IonCardContent>
-                    <div className='container-logo-label'>
-                        <img src={greenCheckmark} alt="success" width="70px"/>
-                        <IonText>
-                            <h1>Успешно!</h1>
-                        </IonText>
-                    </div>
-                    <IonButton
-                        style={{marginTop: "60px"}}
-                        expand="block"
-                        type="submit"
-                        color="secondary"
-                        onClick={handleLogin}
-                    >
-                        <IonText color='white'>На экран входа</IonText>
-                    </IonButton>
+                    <form onSubmit={handleLogin}>
+                        <div className='container-logo-label'>
+                            <img src={greenCheckmark} alt="success" width="70px"/>
+                            <IonText>
+                                <h1>Успешно!</h1>
+                            </IonText>
+                        </div>
+                        <IonButton
+                            style={{marginTop: "60px"}}
+                            expand="block"
+                            type="submit"
+                            color="secondary"
+                        >
+                            <IonText color='white'>На экран входа</IonText>
+                        </IonButton>
+                    </form>
                 </IonCardContent>
             </IonContent>
         </IonPage>
