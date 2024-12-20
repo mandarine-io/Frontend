@@ -26,5 +26,6 @@ export function getUnAuthenticatedRoutes(): RouteProps[] {
 }
 
 export function getPrivateRoutes(): RouteProps[] {
-    return []
+    return [
+    ]
 }
